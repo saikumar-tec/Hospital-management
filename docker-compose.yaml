@@ -1,0 +1,54 @@
+services:
+
+  mongodb:
+    image: mongo:7
+    container_name: hospital-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: hospital-backend
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      MONGO_URI: mongodb://mongodb:27017/hospital
+      JWT_SECRET_KEY: your-secret-key
+      JWT_EXPIRES: 7d
+      CLOUDINARY_CLOUD_NAME: your-cloudinary-name
+      CLOUDINARY_API_KEY: your-cloudinary-key
+      CLOUDINARY_API_SECRET: your-cloudinary-secret
+    depends_on:
+      - mongodb
+
+  frontend-admin:
+    build:
+      context: ./Frontend-Admin
+      dockerfile: Dockerfile
+    container_name: hospital-admin
+    restart: unless-stopped
+    ports:
+      - "5174:5174"
+    depends_on:
+      - backend
+
+  frontend-patient:
+    build:
+      context: ./Frontend-Patient
+      dockerfile: Dockerfile
+    container_name: hospital-patient
+    restart: unless-stopped
+    ports:
+      - "5175:5175"
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
