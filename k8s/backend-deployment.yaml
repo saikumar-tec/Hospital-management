@@ -16,6 +16,7 @@ spec:
       containers:
         - name: backend
           image: saikumaar/hospital-backend:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 4000
           env:

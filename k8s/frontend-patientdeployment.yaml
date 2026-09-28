@@ -16,6 +16,7 @@ spec:
       containers:
         - name: patient
           image: saikumaar/hospital-patient:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 5175
 

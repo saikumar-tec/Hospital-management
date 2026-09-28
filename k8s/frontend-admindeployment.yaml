@@ -16,6 +16,7 @@ spec:
       containers:
         - name: admin
           image: saikumaar/hospital-admin:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 5174
 
