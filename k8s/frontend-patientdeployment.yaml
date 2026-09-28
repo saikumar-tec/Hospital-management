@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hospital-patient
+  namespace: hospital
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hospital-patient
+  template:
+    metadata:
+      labels:
+        app: hospital-patient
+    spec:
+      containers:
+        - name: patient
+          image: saikumaar/hospital-patient:v1
+          ports:
+            - containerPort: 5175
+

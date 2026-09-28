@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hospital-admin
+  namespace: hospital
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hospital-admin
+  template:
+    metadata:
+      labels:
+        app: hospital-admin
+    spec:
+      containers:
+        - name: admin
+          image: saikumaar/hospital-admin:v1
+          ports:
+            - containerPort: 5174
+

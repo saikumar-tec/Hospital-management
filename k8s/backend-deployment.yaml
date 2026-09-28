@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hospital-backend
+  namespace: hospital
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hospital-backend
+  template:
+    metadata:
+      labels:
+        app: hospital-backend
+    spec:
+      containers:
+        - name: backend
+          image: saikumaar/hospital-backend:v1
+          ports:
+            - containerPort: 4000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017/Life_Care_Hospital"
+            - name: PORT
+              value: "4000"
+            - name: JWT_SECRET_KEY
+              value: "your-secret-key"
+            - name: JWT_EXPIRES
+              value: "7d"
+            - name: COOKIE_EXPIRE
+              value: "7"
